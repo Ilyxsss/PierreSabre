@@ -4,6 +4,8 @@ public class Humain {
 	private String nom;
 	private String boissonFavorite;
 	private int argent;
+	protected int nbConnaissance;
+	private Humain[] memoire;
 
 	public Humain(String nom, String boissonFavorite, int argent) {
 		super();
@@ -37,6 +39,35 @@ public class Humain {
 					+ " sous.");
 		}
 	}
+	
+	public void faireConnaissance(Humain humain) {
+		memoriser(humain);
+		humain.memoriser(this);
+	}
+	
+	private void memoriser(Humain humain) {
+		if (nbConnaissance < 30) {
+			memoire[nbConnaissance] = humain;
+			nbConnaissance++;
+		}
+	}
+	
+	private void repondre(Humain humain) {
+		humain.parler("Bonjour " + humain.getNom() + " !");
+	}
+	
+	public void listerConnaissance() {
+		for (int i = 0; i < nbConnaissance; i++) {
+			System.out.println(memoire[i].getNom());
+		}
+	}
+	
+	public void faireConnaissanceAvec(Humain autreHumain) {
+		autreHumain.direBonjour();
+		repondre(autreHumain);
+		autreHumain.memoriser(this);
+		memoriser(autreHumain);
+	}
 
 	public void parler(String texte) {
 		System.out.println("(" + nom + ") - " + texte);
@@ -49,5 +80,7 @@ public class Humain {
 	public void perdreArgent(int sommePerdue) {
 		argent -= sommePerdue;
 	}
+	
+	
 
 }
